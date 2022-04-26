@@ -1,0 +1,27 @@
+version: '2'
+services:
+  webserver:
+    container_name: php-apache
+    build:
+      context: ./dockers
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html/
+      - ./dockers/apache.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - 8080:80
+  db:
+    container_name: db
+    image: mysql:5.7
+    volumes:
+      - ./data/db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: 12345678
+    ports:
+      - 3306:3306
