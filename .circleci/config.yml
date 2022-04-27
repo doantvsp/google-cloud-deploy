@@ -1,26 +1,172 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+executors:
+  build_test:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: circleci/php:7.4.3-zts
+    working_directory: ~/workspace
+
+  gce_deploy:
+    docker:
+      - image: google/cloud-sdk
+    working_directory: ~/workspace
+
+commands:
+  chmod_777:
+    steps:
+      - run:
+          name: chmod 777 (directory permission adjustment)
+          command: |
+            chmod 777 -R storage
+            chmod 777 -R bootstrap/cache
+
+  composer_install:
+    steps:
+      - restore_cache:
+          name: restore composer cache
+          keys:
+            - composer-cache-v1-{{ .Branch }}-{{ checksum "composer.lock" }}
+      - run:
+          name: composer install
+          command: composer install -n --prefer-dist
+      - save_cache:
+          name: save composer cache
+          key: composer-cache-v1-{{ .Branch }}-{{ checksum "composer.lock" }}
+          paths:
+            - ./vendor
+      - run:
+          name: clear laravel config
+          command: php artisan config:clear
+      - run:
+          name: Generate key
+          command: php artisan key:generate
+
+  gettext_install:
+    steps:
+      - run:
+          name: gettext install
+          command: apt-get install -qq -y gettext
+
+  authorize_gcp:
+    steps:
+      - run:
+          name: Google Authentication
+          command: |
+            echo $JSON_KEY_FILE > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia.gcr.io
+  build_docker_image:
+    steps:
+      - run:
+          name: Docker build image
+          command: |
+            docker build \
+              --file=dockerfile/Dockerfile \
+              -t laravel-circleci .
+
+  push_image_to_gcr:
+    steps:
+      - run:
+          name: Docker push image to GCR
+          command: |
+            docker tag laravel-circleci gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker tag gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
+
+  select_gke_cluster:
+    steps:
+      - run:
+          name: Select GKE Cluster
+          command: |
+            gcloud config set core/project laravel-circleci
+            gcloud config set container/cluster phongthuybinhan-cluster-1
+            gcloud container clusters get-credentials phongthuybinhan-cluster-1 --zone asia-northeast3-a --project laravel-circleci
+
+  deploy_kubernetes:
+    steps:
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            envsubst < yaml_files/deployment.yaml > ./deployment.yaml
+            envsubst < yaml_files/pdb-laravel-circleci.yaml > ./svc.yaml
+            envsubst < yaml_files/svc-laravel-circleci.yaml > ./pdb.yaml
+            kubectl apply -f ./deployment.yaml
+            kubectl apply -f ./svc.yaml
+            kubectl apply -f ./pdb.yaml
+            kubectl rollout status deployment laravel-circleci
+
+jobs:
+  checkout_code:
+    parallelism: 1
+    executor:
+      name: build_test
+    working_directory: ~/workspace
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - ./*
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  build:
+    executor:
+      name: build_test
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          name: Configure PHP env
+          command: cp .env.example .env
+      - chmod_777
+      - composer_install
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - ./*
+
+  test:
+    executor:
+      name: build_test
+    working_directory: ~/workspace
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          name: phpcs
+          command: |
+            vendor/bin/phpcs --standard=PSR1 -e app
+          when: always
+
+  deploy:
+    executor:
+      name: gce_deploy
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - gettext_install
+      - setup_remote_docker
+      - authorize_gcp
+      - build_docker_image
+      - push_image_to_gcr
+      - select_gke_cluster
+      - deploy_kubernetes
+
 workflows:
-  say-hello-workflow:
+  version: 2.1
+  build-test-deploy:
     jobs:
-      - say-hello
+      - checkout_code
+      - build:
+          requires:
+            - checkout_code
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
