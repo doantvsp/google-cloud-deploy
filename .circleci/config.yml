@@ -160,12 +160,12 @@ workflows:
       - build:
           requires:
             - checkout_code
-      - test:
-          requires:
-            - build
+#      - test:
+#          requires:
+#            - build
       - deploy:
-          requires:
-            - test
+#          requires:
+#            - test
           filters:
             branches:
               only:
