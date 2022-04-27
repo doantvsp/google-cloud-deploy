@@ -61,15 +61,15 @@ commands:
           name: Docker build image
           command: |
             docker build \
-              --file=dockerfile/Dockerfile \
-              -t laravel-circleci .
+              --file=dockers/Dockerfile \
+              -t google-cloud-deploy.
 
   push_image_to_gcr:
     steps:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag laravel-circleci gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy:latest
             docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
             docker tag gcr.io/united-monument-348400/google-cloud-deploy:latest
             docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
@@ -79,7 +79,7 @@ commands:
       - run:
           name: Select GKE Cluster
           command: |
-            gcloud config set core/project laravel-circleci
+            gcloud config set core/project google-cloud-deploy
             gcloud config set container/cluster phongthuybinhan-cluster-1
             gcloud container clusters get-credentials phongthuybinhan-cluster-1 --zone asia-northeast3-a --project laravel-circleci
 
@@ -94,7 +94,7 @@ commands:
             kubectl apply -f ./deployment.yaml
             kubectl apply -f ./svc.yaml
             kubectl apply -f ./pdb.yaml
-            kubectl rollout status deployment laravel-circleci
+            kubectl rollout status deployment google-cloud-deploy
 
 jobs:
   checkout_code:
