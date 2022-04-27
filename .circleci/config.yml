@@ -3,7 +3,7 @@ version: 2.1
 executors:
   build_test:
     docker:
-      - image: circleci/php:8.0.14-zts
+      - image: cimg/php:8.1.5
     working_directory: ~/workspace
 
   gce_deploy:
