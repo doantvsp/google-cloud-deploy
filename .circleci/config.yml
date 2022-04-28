@@ -69,10 +69,10 @@ commands:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy:latest
-            docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
-            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy:latest
-            docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy@sha256:1d1419771e8c47db18df1ae1406396e006deadf9ee733c721d6a460ec4acfe25
+            docker push gcr.io/united-monument-348400/google-cloud-deploy@sha256:1d1419771e8c47db18df1ae1406396e006deadf9ee733c721d6a460ec4acfe25
+            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy@sha256:1d1419771e8c47db18df1ae1406396e006deadf9ee733c721d6a460ec4acfe25
+            docker push gcr.io/united-monument-348400/google-cloud-deploy@sha256:1d1419771e8c47db18df1ae1406396e006deadf9ee733c721d6a460ec4acfe25
 
   select_gke_cluster:
     steps:
