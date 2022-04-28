@@ -71,7 +71,7 @@ commands:
           command: |
             docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy:latest
             docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
-            docker tag gcr.io/united-monument-348400/google-cloud-deploy:latest
+            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy:latest
             docker push gcr.io/united-monument-348400/google-cloud-deploy:latest
 
   select_gke_cluster:
