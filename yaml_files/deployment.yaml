@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: google-cloud-deploy
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      name: google-cloud-deploy
+  template:
+    metadata:
+      labels:
+        name: google-cloud-deploy
+    spec:
+      containers:
+        - name: google-cloud-deploy-container
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 512Mi
+          image: gcr.io/united-monument-348400/google-cloud-deploy:latest
+          imagePullPolicy: Always
+          command: ["apache2-foreground"]
+          ports:
+            - containerPort: 80
