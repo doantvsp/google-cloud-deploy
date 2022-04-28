@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    die('hello world..');
+    die('hello world....');
     return view('welcome');
 });
 Route::get('/home',function (){
