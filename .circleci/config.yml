@@ -80,8 +80,8 @@ commands:
           name: Select GKE Cluster
           command: |
             gcloud config set core/project google-cloud-deploy
-            gcloud config set container/cluster phongthuybinhan-cluster-1
-            gcloud container clusters get-credentials phongthuybinhan-cluster-1 --zone asia-northeast3-a --project laravel-circleci
+            gcloud config set container/cluster google-cloud-cluster-1
+            gcloud container clusters get-credentials google-cloud-cluster-1 --zone asia-east1-a --project google-cloud-deploy
 
   deploy_kubernetes:
     steps:
