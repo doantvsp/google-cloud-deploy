@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:7.4-apache
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -12,9 +12,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     && docker-php-ext-install zip
-RUN docker-php-ext-install mysqli pdo pdo_mysql \
-    && a2emod \
-    rewrite
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN a2enmod rewrite
 RUN service apache2 restart
 RUN apt-get update && apt-get upgrade -y
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
