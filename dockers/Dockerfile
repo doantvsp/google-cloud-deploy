@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     && docker-php-ext-install zip
-RUN docker-php-ext-install mysqli pdo pdo_mysql  \
+RUN docker-php-ext-install mysqli pdo pdo_mysql \
     && a2emod \
     rewrite
 RUN service apache2 restart
