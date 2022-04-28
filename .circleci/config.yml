@@ -157,12 +157,20 @@ workflows:
   build-test-deploy:
     jobs:
       - checkout_code
+        filters:
+          branches:
+            only:
+              - master
       - build:
           requires:
             - checkout_code
 #      - test:
 #          requires:
 #            - build
+        filters:
+          branches:
+            only:
+              - master
       - deploy:
           requires:
             #- test
