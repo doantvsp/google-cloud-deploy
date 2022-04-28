@@ -26,7 +26,7 @@ spec:
               memory: 512Mi
             limits:
               memory: 512Mi
-          image: gcr.io/united-monument-348400/google-cloud-deploy@sha256:1d1419771e8c47db18df1ae1406396e006deadf9ee733c721d6a460ec4acfe25
+          image: gcr.io/united-monument-348400/google-cloud-deploy@sha256:8ce7fc80b29fa2a27dabb7e3942da0545d34a0de2b27a434d348a0d5b76bc5f4
           imagePullPolicy: Always
           command: ["apache2-foreground"]
           ports:
