@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-google-cloud-deploy
+  labels:
+    name: svc-google-cloud-deploy
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30502
+  selector:
+    name: google-cloud-deploy

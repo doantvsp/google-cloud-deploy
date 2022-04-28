@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-google-cloud-deploy
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: google-cloud-deploy
