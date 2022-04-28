@@ -164,8 +164,9 @@ workflows:
 #          requires:
 #            - build
       - deploy:
-#          requires:
-#            - test
+          requires:
+            #- test
+            - build
           filters:
             branches:
               only:
