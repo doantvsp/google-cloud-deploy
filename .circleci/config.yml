@@ -79,7 +79,7 @@ commands:
       - run:
           name: Select GKE Cluster
           command: |
-            gcloud config set core/project google-cloud-deploy
+            gcloud config set core/project united-monument-348400
             gcloud config set container/cluster google-cloud-cluster-1
             gcloud container clusters get-credentials google-cloud-cluster-1 --zone asia-east1-a --project google-cloud-deploy
 
