@@ -61,7 +61,7 @@ commands:
           name: Docker build image
           command: |
             docker build \
-              --file=dockerfile/Dockerfile \
+              --file=dockers/Dockerfile \
               -t google-cloud-deploy .
 
   push_image_to_gcr:
