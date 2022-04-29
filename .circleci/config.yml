@@ -62,17 +62,17 @@ commands:
           command: |
             docker build \
               --file=dockers/Dockerfile \
-              -t google-cloud-deploy111 .
+              -t laravel-circleci .
 
   push_image_to_gcr:
     steps:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy111:latest
-            docker push gcr.io/united-monument-348400/google-cloud-deploy111:latest
-            docker tag google-cloud-deploy gcr.io/united-monument-348400/google-cloud-deploy111:latest
-            docker push gcr.io/united-monument-348400/google-cloud-deploy111:latest
+            docker tag laravel-circleci asia.gcr.io/laravel-circleci/laravel-circleci:1.1
+            docker push asia.gcr.io/laravel-circleci/laravel-circleci:1.1
+            docker tag laravel-circleci asia.gcr.io/laravel-circleci/laravel-circleci:latest
+            docker push asia.gcr.io/laravel-circleci/laravel-circleci:latest
 
   select_gke_cluster:
     steps:
