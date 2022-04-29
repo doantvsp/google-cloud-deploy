@@ -8,6 +8,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      nodePort: 8080
+      nodePort: 30502
   selector:
     name: google-cloud-deploy
