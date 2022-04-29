@@ -69,10 +69,10 @@ commands:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag laravel-circleci asia.gcr.io/laravel-circleci/laravel-circleci:1.1
-            docker push asia.gcr.io/laravel-circleci/laravel-circleci:1.1
-            docker tag laravel-circleci asia.gcr.io/laravel-circleci/laravel-circleci:latest
-            docker push asia.gcr.io/laravel-circleci/laravel-circleci:latest
+            docker tag laravel-circleci asia.gcr.io/united-monument-348400/laravel-circleci:1.1
+            docker push asia.gcr.io/united-monument-348400/laravel-circleci:1.1
+            docker tag laravel-circleci asia.gcr.io/united-monument-348400/laravel-circleci:latest
+            docker push asia.gcr.io/united-monument-348400/laravel-circleci:latest
 
   select_gke_cluster:
     steps:
