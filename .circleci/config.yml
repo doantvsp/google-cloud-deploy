@@ -62,7 +62,7 @@ commands:
           command: |
             docker build \
               --file=dockers/Dockerfile \
-              -t google-cloud-deploy .
+              -t google-cloud-deploy111 .
 
   push_image_to_gcr:
     steps:
