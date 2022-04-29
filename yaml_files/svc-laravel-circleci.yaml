@@ -5,9 +5,9 @@ metadata:
   labels:
     name: svc-google-cloud-deploy
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 80
-      nodePort: 30502
+      nodePort: 8080
   selector:
     name: google-cloud-deploy
