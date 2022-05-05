@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    die('Today is new day.');
+//    die('Today is new day.');
     return view('welcome');
 });
 Route::get('/home', function () {
