@@ -135,7 +135,7 @@ jobs:
       - run:
           name: phpcs
           command: |
-            vendor/bin/phpcs --standard=PSR1 -e routes/web.php
+            vendor/bin/phpcs --standard=PSR2  app
           when: always
 
   deploy:
