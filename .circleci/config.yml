@@ -135,7 +135,7 @@ jobs:
       - run:
           name: phpcs
           command: |
-            vendor/bin/phpcs --standard=PSR1 -e app
+            vendor/bin/phpcs --standard=PSR2  app
           when: always
 
   deploy:
@@ -160,12 +160,12 @@ workflows:
       - build:
           requires:
             - checkout_code
-#      - test:
-#          requires:
-#            - build
+      - test:
+          requires:
+            - build
       - deploy:
           requires:
-            #- test
+            - test
             - build
           filters:
             branches:

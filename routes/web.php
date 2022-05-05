@@ -15,6 +15,6 @@ Route::get('/', function () {
     die('Today is new day.');
     return view('welcome');
 });
-Route::get('/home',function (){
+Route::get('/home', function () {
     die('aaaaaaaaaa');
 });
