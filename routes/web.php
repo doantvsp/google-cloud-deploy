@@ -12,7 +12,6 @@
 */
 
 Route::get('/', function () {
-     $A = TRUE;
     die('hello world....hello');
     return view('welcome');
 });

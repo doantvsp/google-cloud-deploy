@@ -9,7 +9,7 @@ services:
       - db
     volumes:
       - ./:/var/www/html/
-      - ./dockers/apache.conf:/etc/apache2/sites-available/000-default.conf
+#      - ./dockers/apache.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - 80:80
   db:
