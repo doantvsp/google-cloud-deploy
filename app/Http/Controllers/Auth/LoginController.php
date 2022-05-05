@@ -37,7 +37,8 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    public function test(){
+    public function test()
+    {
         $A = TRUE;
         die('hello world....hello');
     }
