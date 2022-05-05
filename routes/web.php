@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    $A = 1;
+    $A = TRUE;
     die('hello world....hello');
     return view('welcome');
 });
