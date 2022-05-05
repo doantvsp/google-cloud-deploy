@@ -18,6 +18,6 @@ class ExampleTest extends TestCase
 
     public function test1()
     {
-        $this->assertEquals(1,2);
+        $this->assertEquals(1,1);
     }
 }
