@@ -136,6 +136,7 @@ jobs:
           name: phpcs
           command: |
             vendor/bin/phpcs --standard=PSR2  app
+            vendor/bin/phpunit
           when: always
 
   deploy:
