@@ -62,17 +62,17 @@ commands:
           command: |
             docker build \
               --file=dockers/Dockerfile \
-              -t laravel-circleci .
+              -t ${CIRCLE_PROJECT_REPONAME} .
 
   push_image_to_gcr:
     steps:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag laravel-circleci gcr.io/united-monument-348400/laravel-circleci:1.1
-            docker push gcr.io/united-monument-348400/laravel-circleci:1.1
-            docker tag laravel-circleci gcr.io/united-monument-348400/laravel-circleci:latest
-            docker push gcr.io/united-monument-348400/laravel-circleci:latest
+            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
+            docker push gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
+            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:latest
+            docker push gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:latest
 
   select_gke_cluster:
     steps:

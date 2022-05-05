@@ -26,7 +26,7 @@ spec:
               memory: 512Mi
             limits:
               memory: 512Mi
-          image: gcr.io/united-monument-348400/laravel-circleci:latest
+          image: gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:latest
           imagePullPolicy: Always
           command: ["apache2-foreground"]
           ports:
