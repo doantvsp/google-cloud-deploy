@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
+    $A = 1;
     die('hello world....hello');
     return view('welcome');
 });
-Route::get('/home',function()
-{
+Route::get('/home', function () {
     die('aaaaaaaaaa');
 });
