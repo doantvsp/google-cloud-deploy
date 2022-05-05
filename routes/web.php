@@ -15,7 +15,7 @@ Route::get('/', function () {
     die('hello world....hello');
     return view('welcome');
 });
-Route::get('/home',function ()
+Route::get('/home',function()
 {
     die('aaaaaaaaaa');
 });
