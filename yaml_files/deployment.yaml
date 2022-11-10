@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: google-cloud-deploy
+  name: laravel-circleci
 spec:
   replicas: 1
   strategy:
@@ -12,21 +12,21 @@ spec:
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      name: google-cloud-deploy
+      name: laravel-circleci
   template:
     metadata:
       labels:
-        name: google-cloud-deploy
+        name: laravel-circleci
     spec:
       containers:
-        - name: google-cloud-deploy-container
+        - name: laravel-circleci-container
           resources:
             requests:
               cpu: 200m
               memory: 512Mi
             limits:
               memory: 512Mi
-          image: gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
+          image: gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
           imagePullPolicy: Always
           command: ["apache2-foreground"]
           ports:

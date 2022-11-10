@@ -69,19 +69,19 @@ commands:
       - run:
           name: Docker push image to GCR
           command: |
-            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
-            docker push gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
-            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:latest
-            docker push gcr.io/united-monument-348400/${CIRCLE_PROJECT_REPONAME}:latest
+            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
+            docker push gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-${CIRCLE_BUILD_NUM}
+            docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
+            docker push gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
 
   select_gke_cluster:
     steps:
       - run:
           name: Select GKE Cluster
           command: |
-            gcloud config set core/project united-monument-348400
-            gcloud config set container/cluster google-cloud-cluster-1
-            gcloud container clusters get-credentials google-cloud-cluster-1 --zone asia-east1-a --project united-monument-348400
+            gcloud config set core/project laravel-circleci
+            gcloud config set container/cluster laravel-circleci-cluster-1
+            gcloud container clusters get-credentials laravel-circleci-cluster-1 --zone asia-east1-a --project laravel-circleci
 
   deploy_kubernetes:
     steps:
@@ -94,7 +94,7 @@ commands:
             kubectl apply -f ./deployment.yaml
             kubectl apply -f ./svc.yaml
             kubectl apply -f ./pdb.yaml
-            kubectl rollout status deployment google-cloud-deploy
+            kubectl rollout status deployment laravel-circleci
 
 jobs:
   checkout_code:
@@ -136,6 +136,7 @@ jobs:
           name: phpcs
           command: |
             vendor/bin/phpcs --standard=PSR2  app
+            vendor/bin/phpunit
           when: always
 
   deploy:
