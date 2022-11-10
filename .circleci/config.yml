@@ -81,7 +81,7 @@ commands:
           command: |
             gcloud config set core/project ${STG_GCP_PROJECT_ID}
             gcloud config set container/cluster laravel-circleci-cluster-1
-            gcloud container clusters get-credentials laravel-circleci-cluster-1 --zone asia-east1-a --project ${STG_GCP_PROJECT_ID}
+            gcloud container clusters get-credentials laravel-circleci-cluster-1 --zone asia-east1-a --project laravel-circleci
 
   deploy_kubernetes:
     steps:
