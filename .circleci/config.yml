@@ -79,9 +79,9 @@ commands:
       - run:
           name: Select GKE Cluster
           command: |
-            gcloud config set core/project laravel-circleci
+            gcloud config set core/project ${STG_GCP_PROJECT_ID}
             gcloud config set container/cluster laravel-circleci-cluster-1
-            gcloud container clusters get-credentials laravel-circleci-cluster-1 --zone asia-east1-a --project laravel-circleci
+            gcloud container clusters get-credentials laravel-circleci-cluster-1 --zone asia-east1-a --project ${STG_GCP_PROJECT_ID}
 
   deploy_kubernetes:
     steps:
