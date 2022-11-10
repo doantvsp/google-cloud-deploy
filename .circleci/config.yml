@@ -74,28 +74,12 @@ commands:
             docker tag ${CIRCLE_PROJECT_REPONAME} gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
             docker push gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
 
-  select_gke_cluster:
+  deploy_cloud_run:
     steps:
       - run:
-          name: Select GKE Cluster
+          name: Deploy Cloud Run
           command: |
-            gcloud config set core/project ${STG_GCP_PROJECT_ID}
-            gcloud config set compute/region ${STG_GKE_REGION_NAME}
-            gcloud config set container/cluster ${STG_GKE_CLUSTER_NAME_FOR_REPLACE}
-            gcloud container clusters get-credentials ${STG_GKE_CLUSTER_NAME_FOR_REPLACE}
-
-  deploy_kubernetes:
-    steps:
-      - run:
-          name: Deploy to Kubernetes
-          command: |
-            envsubst < yaml_files/deployment.yaml > ./deployment.yaml
-            envsubst < yaml_files/pdb-laravel-circleci.yaml > ./svc.yaml
-            envsubst < yaml_files/svc-laravel-circleci.yaml > ./pdb.yaml
-            kubectl apply -f ./deployment.yaml
-            kubectl apply -f ./svc.yaml
-            kubectl apply -f ./pdb.yaml
-            kubectl rollout status deployment laravel-circleci
+            gcloud run deploy laravel-circleci --image gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
 
 jobs:
   checkout_code:
@@ -151,8 +135,7 @@ jobs:
       - authorize_gcp
       - build_docker_image
       - push_image_to_gcr
-      - select_gke_cluster
-      - deploy_kubernetes
+      - deploy_cloud_run
 
 workflows:
   version: 2.1
