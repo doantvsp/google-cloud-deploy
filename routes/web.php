@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/home', function () {
     die('CLOUD RUN: hello world');
 });
+Route::get('/test', function () {
+    die('CLOUD RUN: test');
+});
