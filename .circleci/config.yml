@@ -80,7 +80,7 @@ commands:
           name: Deploy Cloud Run
           command: |
             gcloud config set core/project ${STG_GCP_PROJECT_ID}
-            gcloud run deploy laravel-circleci --image gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
+            gcloud run deploy laravel-circleci --region asia-east1 --image gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
 
 jobs:
   checkout_code:
