@@ -8,8 +8,7 @@ spec:
       containers:
         - image: gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
           ports:
-            - name: http1
-              containerPort: 80
+            - containerPort: 80
         - region: asia-east1
           resources:
             limits:
