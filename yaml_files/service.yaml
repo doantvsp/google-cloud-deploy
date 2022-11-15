@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
+        - image: gcr.io/laravel-circleci-368204/google-cloud-deploy
           ports:
             - containerPort: "80"
           resources:
