@@ -8,7 +8,7 @@ spec:
       containers:
         - image: gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
           ports:
-            - containerPort: 80
+            - containerPort: "80"
           resources:
             limits:
-              cpu: 2
+              cpu: "2"
