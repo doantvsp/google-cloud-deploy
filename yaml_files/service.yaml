@@ -1,0 +1,16 @@
+apiVersion: laravel-circleci/v1
+kind: Service
+metadata:
+  name: laravel-circleci
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/${STG_GCP_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:latest
+          ports:
+            - name: http1
+              containerPort: 80
+        - region: asia-east1
+          resources:
+            limits:
+              cpu: 2
