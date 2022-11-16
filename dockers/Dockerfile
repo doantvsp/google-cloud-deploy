@@ -24,6 +24,3 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
 RUN apt-get install git
-
-COPY ./run.sh /tmp
-ENTRYPOINT ["/tmp/run.sh"]

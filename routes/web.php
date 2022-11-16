@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
 //    die('Today is new day.');
@@ -20,4 +21,8 @@ Route::get('/home', function () {
 });
 Route::get('/test', function () {
     die('CLOUD RUN: test');
+});
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return Artisan::output();
 });
