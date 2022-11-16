@@ -37,6 +37,9 @@ commands:
       - run:
           name: clear laravel config
           command: php artisan config:clear
+      - run:
+          name: generate app key
+          command: php artisan key:generate
   config_env_and_db:
     steps:
       - run:
