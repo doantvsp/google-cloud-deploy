@@ -46,9 +46,6 @@ commands:
           name: Configure PHP env (STG)
           command: |
             envsubst < .env.staging > .env
-      - run:
-          name: migrate database
-          command: php artisan migrate
 
   gettext_install:
     steps:
