@@ -41,7 +41,8 @@ commands:
     steps:
       - run:
           name: Configure PHP env (STG)
-          command: envsubst < .env.staging > .env
+          command:
+            envsubst < .env.staging > .env
       - run:
           name: migrate database
           command: php artisan migrate
