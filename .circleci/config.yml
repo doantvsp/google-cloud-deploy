@@ -37,9 +37,14 @@ commands:
       - run:
           name: clear laravel config
           command: php artisan config:clear
+  config_env_and_db:
+    steps:
       - run:
-          name: Generate key
-          command: php artisan key:generate
+          name: Configure PHP env (STG)
+          command: envsubst < .env.staging > .env
+      - run:
+          name: migrate database
+          command: php artisan migrate
 
   gettext_install:
     steps:
@@ -102,9 +107,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/workspace
-      - run:
-          name: Configure PHP env
-          command: cp .env.example .env
+      - config_env
       - chmod_777
       - composer_install
       - persist_to_workspace:
