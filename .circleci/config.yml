@@ -111,6 +111,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/workspace
+      - run:
+        name: Configure PHP env
+        command: cp .env.example .env
       - chmod_777
       - composer_install
       - persist_to_workspace:
