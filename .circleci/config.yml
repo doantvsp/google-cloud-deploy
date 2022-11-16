@@ -107,7 +107,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/workspace
-      - config_env
+      - config_env_and_db
       - chmod_777
       - composer_install
       - persist_to_workspace:
