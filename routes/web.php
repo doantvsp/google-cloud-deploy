@@ -26,3 +26,11 @@ Route::get('/migrate', function () {
     Artisan::call('migrate');
     return Artisan::output();
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
