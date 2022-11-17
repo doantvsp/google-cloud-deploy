@@ -52,6 +52,14 @@ commands:
       - run:
           name: gettext install
           command: apt-get install -qq -y gettext
+  npm_install:
+    steps:
+      - run:
+          name: npm install
+          command: npm install
+      - run:
+          name: npm run dev
+          command: npm run dev
 
   authorize_gcp:
     steps:
