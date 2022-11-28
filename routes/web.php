@@ -26,6 +26,10 @@ Route::get('/migrate', function () {
     Artisan::call('migrate');
     return Artisan::output();
 });
+Route::get('/rollback', function () {
+    Artisan::call('migrate:rollback');
+    return Artisan::output();
+});
 
 Auth::routes();
 
