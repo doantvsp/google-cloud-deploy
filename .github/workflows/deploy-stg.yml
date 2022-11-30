@@ -1,4 +1,4 @@
-name: Deploy to Cloud Run1
+name: Deploy to Cloud Run
 
 on:
   push:
@@ -18,3 +18,6 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.JSON_KEY_FILE }}'
+      - name: Docker build image
+        run: docker build --file=dockers/Dockerfile -t ${{ secrets.GITHUB_REPOSITORY }} .
+
