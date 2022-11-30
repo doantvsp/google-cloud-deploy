@@ -15,9 +15,12 @@ jobs:
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
+        env:
+          GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.JSON_KEY_FILE }}'
-      - name: Docker build image
-        run: docker build --file=dockers/Dockerfile -t doantv .
+      - run : echo $GITHUB_RUN_NUMBER
+#      - name: Docker build image
+#        run: docker build --file=dockers/Dockerfile -t doantv .
 
