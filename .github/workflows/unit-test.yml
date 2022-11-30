@@ -2,9 +2,9 @@ name: Unit-test
 
 on:
   push:
-    branches: [ "master1" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master1" ]
+    branches: [ "master" ]
 
 jobs:
   laravel-tests:
