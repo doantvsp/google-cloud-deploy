@@ -17,10 +17,8 @@ jobs:
 #      - name: Configure PHP env (STG)
 #        run: envsubst < .env.staging > .env
       - name: Google Authentication
-        env:
-          JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
         run: |
-          echo $JSON_KEY_FILE
-          echo $JSON_KEY_FILE > ${{ secrets.HOME_PATH }}/gcloud-service-key.json
+          echo ${{ secrets.JSON_KEY_FILE }}
+          echo ${{ secrets.JSON_KEY_FILE }} > ${{ secrets.HOME_PATH }}/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=${{ secrets.HOME_PATH }}/gcloud-service-key.json
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
