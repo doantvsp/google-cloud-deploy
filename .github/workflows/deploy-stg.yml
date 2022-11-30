@@ -16,11 +16,23 @@ jobs:
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         env:
+          JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
           GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.JSON_KEY_FILE }}'
-      - run : echo $GITHUB_RUN_NUMBER
-#      - name: Docker build image
-#        run: docker build --file=dockers/Dockerfile -t doantv .
+          GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
+          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+          STG_GCP_PROJECT_ID: ${{ secrets.STG_GCP_PROJECT_ID }}
+          GITHUB_WORKSPACE: ${{ secrets.GITHUB_WORKSPACE }}
+      - name: Google Authentication
+        run: |
+          echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
+          gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+      - name: Docker build image
+        run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
+      - name: Docker push image to GCR
+        run: |
+          docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
+          docker push gcr.io/$STG_GCP_PROJECT_ID/$$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
+          docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
+          docker push gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
 
