@@ -5,6 +5,13 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+env:
+  JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
+  GITHUB_WORKSPACE: ${{ secrets.GITHUB_WORKSPACE }}
+  STG_GCP_PROJECT_ID: ${{ secrets.STG_GCP_PROJECT_ID }}
+  GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+  GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
+  GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
 
 jobs:
   job_id:
@@ -12,12 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Google Authentication
-        env:
-          JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
-          GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
-          GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_WORKSPACE: ${{ secrets.GITHUB_WORKSPACE }}
         run: |
           echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
@@ -26,11 +27,15 @@ jobs:
       - name: Docker build image
         run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
       - name: Docker push image to GCR
-        env:
-          STG_GCP_PROJECT_ID: ${{ secrets.STG_GCP_PROJECT_ID }}
         run: |
           docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
           docker push gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
           docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
           docker push gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
+      - name: Deploy Cloud Run
+        run: |
+          gcloud config set core/project $STG_GCP_PROJECT_ID
+          envsubst < yaml_files/service.yaml > ./service.yaml
+          gcloud run services replace service.yaml --region=asia-east1
+          gcloud run services update laravel-circleci --add-cloudsql-instances=$STG_GCP_PROJECT_ID:asia-east1:laravel-circleci --region=asia-east1
 
