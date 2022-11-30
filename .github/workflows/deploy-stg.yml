@@ -12,10 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: 'actions/checkout@v3'
-
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        env:
+      - env:
           JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
           GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
           GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
