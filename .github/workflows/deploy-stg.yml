@@ -29,7 +29,7 @@ jobs:
       - name: Docker push image to GCR
         run: |
           docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
-          docker push gcr.io/$STG_GCP_PROJECT_ID/$$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
+          docker push gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:$GITHUB_SHA-$GITHUB_RUN_NUMBER
           docker tag $GITHUB_REPOSITORY gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
           docker push gcr.io/$STG_GCP_PROJECT_ID/$GITHUB_REPOSITORY:latest
 
