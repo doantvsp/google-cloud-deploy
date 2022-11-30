@@ -18,6 +18,6 @@ jobs:
 #        run: envsubst < .env.staging > .env
       - name: Google Authentication
         run: |
-          echo ${{ secrets.JSON_KEY_FILE }} > gcloud-service-key.json
+          echo ${{ DB.JSON_KEY_FILE }} > gcloud-service-key.json
           gcloud auth activate-service-account --key-file=gcloud-service-key.json
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
