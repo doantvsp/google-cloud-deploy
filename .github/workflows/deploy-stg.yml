@@ -7,17 +7,14 @@ on:
     branches: [ "master" ]
 
 jobs:
-  laravel-deploy:
-
-    runs-on: ubuntu-latest
+  job_id:
+    # ...
 
     steps:
-#      - name: gettext install
-#        run: apt-get install -qq -y gettext
-#      - name: Configure PHP env (STG)
-#        run: envsubst < .env.staging > .env
-      - name: Google Authentication
-        run: |
-          echo ${{ secrets.JSON_KEY_FILE }} > ${{ secrets.HOME_PATH }}/gcloud-service-key.json
-          gcloud auth activate-service-account --key-file=${{ secrets.HOME_PATH }}/gcloud-service-key.json
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+      - uses: 'actions/checkout@v3'
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.JSON_KEY_FILE }}'
