@@ -1,4 +1,4 @@
-name: Laravel
+name: Deploy to Cloud Run
 
 on:
   push:
@@ -7,15 +7,15 @@ on:
     branches: [ "master" ]
 
 jobs:
-  laravel-tests:
+  laravel-deploy:
 
     runs-on: ubuntu-latest
 
     steps:
-      - name: gettext install
-        run: apt-get install -qq -y gettext
-      - name: Configure PHP env (STG)
-        run: envsubst < .env.staging > .env
+#      - name: gettext install
+#        run: apt-get install -qq -y gettext
+#      - name: Configure PHP env (STG)
+#        run: envsubst < .env.staging > .env
       - name: Google Authentication
         run: |
           echo ${{ secrets.JSON_KEY_FILE }} > gcloud-service-key.json
