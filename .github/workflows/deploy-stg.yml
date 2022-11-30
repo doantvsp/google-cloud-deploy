@@ -19,5 +19,5 @@ jobs:
         with:
           credentials_json: '${{ secrets.JSON_KEY_FILE }}'
       - name: Docker build image
-        run: docker build --file=dockers/Dockerfile -t '${{ secrets.GITHUB_REPOSITORY }}'
+        run: docker build --file=dockers/Dockerfile -t doantv
 
