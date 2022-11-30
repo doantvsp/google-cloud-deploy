@@ -12,6 +12,7 @@ env:
   GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
   GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
   GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+  ENV_STG_DB_PASSWORD: ${{ secrets.ENV_STG_DB_PASSWORD }}
 
 jobs:
   job_id:
@@ -24,6 +25,16 @@ jobs:
           gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
       - uses: 'actions/checkout@v3'
+      - name: Configure PHP env
+        run: cp .env.staging .env
+      - name: chmod 777 (directory permission adjustment)
+        run: |
+          chmod 777 -R storage
+          chmod 777 -R bootstrap/cache
+      - name: composer install
+        run: composer install -n --prefer-dist
+      - name: clear laravel config
+        run: php artisan config:clear
       - name: Docker build image
         run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
       - name: Docker push image to GCR
