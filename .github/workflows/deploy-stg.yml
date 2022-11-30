@@ -11,15 +11,14 @@ jobs:
     # ...
     runs-on: ubuntu-latest
     steps:
-      - uses: 'actions/checkout@v3'
-      - env:
+      - name: Google Authentication
+        env:
           JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
           GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
           GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           STG_GCP_PROJECT_ID: ${{ secrets.STG_GCP_PROJECT_ID }}
           GITHUB_WORKSPACE: ${{ secrets.GITHUB_WORKSPACE }}
-      - name: Google Authentication
         run: |
           echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
