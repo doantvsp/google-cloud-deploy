@@ -20,7 +20,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.JSON_KEY_FILE }}'
-      - run : echo ${{ secrets.GITHUB_RUN_NUMBER }}
+      - run : echo $GITHUB_RUN_NUMBER
 #      - name: Docker build image
 #        run: docker build --file=dockers/Dockerfile -t doantv .
 
