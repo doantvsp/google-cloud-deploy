@@ -54,7 +54,7 @@ jobs:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.0'
-      - uses: 'actions/checkout@v3'
+#      - uses: 'actions/checkout@v3'
       - name: Configure PHP env (STG)
         run: |
           envsubst < .env.staging > .env
@@ -62,10 +62,10 @@ jobs:
         run: |
           chmod 777 -R storage
           chmod 777 -R bootstrap/cache
-      - name: composer install
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: clear laravel config
-        run: php artisan config:clear
+#      - name: composer install
+#        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+#      - name: clear laravel config
+#        run: php artisan config:clear
       - name: Docker build image
         run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
       - name: Docker push image to GCR
