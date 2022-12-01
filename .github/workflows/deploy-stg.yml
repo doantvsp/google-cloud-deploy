@@ -13,6 +13,9 @@ env:
   GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
   GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
   ENV_STG_DB_PASSWORD: ${{ secrets.ENV_STG_DB_PASSWORD }}
+defaults:
+  run:
+    working-directory: scripts
 
 jobs:
   unit-tests:
@@ -51,9 +54,9 @@ jobs:
           echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-        with:
-          php-version: '8.0'
+#      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+#        with:
+#          php-version: '8.0'
 #      - uses: 'actions/checkout@v3'
       - name: Configure PHP env (STG)
         run: |
