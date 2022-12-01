@@ -64,8 +64,8 @@ jobs:
           chmod 777 -R bootstrap/cache
 #      - name: composer install
 #        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: clear laravel config
-        run: php artisan config:clear
+#      - name: clear laravel config
+#        run: php artisan config:clear
       - name: Docker build image
         run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
       - name: Docker push image to GCR
