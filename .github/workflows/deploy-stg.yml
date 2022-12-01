@@ -16,7 +16,6 @@ env:
 
 jobs:
   deploy-stg:
-    needs: unit-tests
     # ...
     runs-on: ubuntu-latest
     steps:
