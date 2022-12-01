@@ -15,7 +15,7 @@ env:
   ENV_STG_DB_PASSWORD: ${{ secrets.ENV_STG_DB_PASSWORD }}
 defaults:
   run:
-    working-directory: scripts
+    working-directory: $GITHUB_WORKSPACE
 
 jobs:
   unit-tests:
