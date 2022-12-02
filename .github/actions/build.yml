@@ -1,14 +1,7 @@
-name: Reusable workflow example
-
+name: Build
 on:
-  workflow_call:
+  workflow_dispatch:
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-        with:
-          php-version: '8.0'
-      - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+  checkout:
+    uses: ./.github/workflows/build.yml
