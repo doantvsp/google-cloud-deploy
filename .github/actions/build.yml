@@ -1,7 +1,0 @@
-name: Build
-on:
-  workflow_dispatch:
-
-jobs:
-  checkout:
-    uses: ./.github/workflows/build.yml
