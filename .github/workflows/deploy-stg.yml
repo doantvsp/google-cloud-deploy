@@ -43,11 +43,6 @@ jobs:
     needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - name: Google Authentication
-        run: |
-          echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
-          gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
       - uses: actions/checkout@v3 # Necessary to access local action
       - name: Run composer install
         id: local-action
@@ -61,6 +56,13 @@ jobs:
           chmod 777 -R bootstrap/cache
       - name: clear laravel config
         run: php artisan config:clear
+
+      - name: Google Authentication
+        run: |
+          echo $JSON_KEY_FILE > $GITHUB_WORKSPACE/gcloud-service-key.json
+          gcloud auth activate-service-account --key-file=$GITHUB_WORKSPACE/gcloud-service-key.json
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+
       - name: Docker build image
         run: docker build --file=dockers/Dockerfile -t $GITHUB_REPOSITORY .
       - name: Docker push image to GCR
