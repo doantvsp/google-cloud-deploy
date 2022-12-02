@@ -16,8 +16,6 @@ env:
 
 jobs:
   unit-tests:
-
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/build.yml
 
 #    steps:
