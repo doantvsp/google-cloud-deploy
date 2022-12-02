@@ -20,7 +20,7 @@ Route::get('/home', function () {
     die('CLOUD RUN: hello world');
 });
 Route::get('/test', function () {
-    die('GITHUB ACTION: hello world !.........');
+    die('GITHUB ACTION: hello world 111111111 !.........');
 });
 Route::get('/migrate', function () {
     Artisan::call('migrate');

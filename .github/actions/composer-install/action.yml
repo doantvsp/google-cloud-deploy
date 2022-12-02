@@ -1,4 +1,4 @@
-name: 'Hello World'
+name: 'Install Dependencies'
 description: 'Greet someone'
 runs:
   using: "composite"
