@@ -2,14 +2,6 @@ name: Reusable workflow example
 
 on:
   workflow_call:
-    inputs:
-      config-path:
-        required: false
-        type: string
-    secrets:
-      token:
-        required: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
