@@ -76,5 +76,4 @@ jobs:
           gcloud config set core/project $STG_GCP_PROJECT_ID
           envsubst < yaml_files/service.yaml > ./service.yaml
           gcloud run services replace service.yaml --region=asia-east1
-          gcloud run services update laravel-circleci --add-cloudsql-instances=$STG_GCP_PROJECT_ID:asia-east1:laravel-circleci --region=asia-east1
 
