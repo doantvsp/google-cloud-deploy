@@ -1,5 +1,5 @@
 cron:
   - description: "test cloud job"
-    url: php artian schedule:cloud
+    url: cd /doantvsp/google-cloud-deploy && php artian schedule:cloud >> /dev/null 2>&1
     target: beta
     schedule: every 1 minute
