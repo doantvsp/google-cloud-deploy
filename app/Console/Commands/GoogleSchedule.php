@@ -37,6 +37,6 @@ class GoogleSchedule extends Command
      */
     public function handle()
     {
-        Log::info('job GCP running');
+        Log::info('job GCP running xxxxx');
     }
 }
