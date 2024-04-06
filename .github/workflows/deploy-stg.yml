@@ -1,7 +1,7 @@
 name: Test and deploy to Cloud Run
 
 on:
-  pull_request:
+  push:
     branches: [ "master" ]
 env:
   JSON_KEY_FILE: ${{ secrets.JSON_KEY_FILE }}
