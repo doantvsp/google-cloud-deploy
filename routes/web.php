@@ -31,11 +31,11 @@ Route::get('/rollback', function () {
     return Artisan::output();
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/run-schedule', function () {
