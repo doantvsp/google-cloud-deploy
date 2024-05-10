@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
@@ -40,4 +42,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/run-schedule', function () {
     Artisan::call('schedule:cloud');
+});
+Route::get('/test-revert', function(){
+    die('verion 1');
 });
