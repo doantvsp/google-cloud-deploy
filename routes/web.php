@@ -42,5 +42,5 @@ Route::post('/run-schedule', function () {
     Artisan::call('schedule:cloud');
 });
 Route::get('/test-revert', function() {
-    echo 'verion 11';
+    echo 'new verion 222222222';
 })->name('home');
