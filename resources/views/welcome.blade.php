@@ -62,6 +62,17 @@
                 margin-bottom: 30px;
             }
         </style>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NLPWPVKKMC"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NLPWPVKKMC');
+        </script>
+
     </head>
     <body>
         <div class="flex-center position-ref full-height">
