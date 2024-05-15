@@ -43,4 +43,7 @@ Route::post('/run-schedule', function () {
 });
 Route::get('/test-revert', function() {
     echo 'new verion 222222222';
-})->name('home');
+});
+Route::get('/article', function() {
+    return view('article');
+});
