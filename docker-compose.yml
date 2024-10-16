@@ -3,8 +3,8 @@ services:
   webserver:
     container_name: php-apache
     build:
-      context: ./dockers
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./dockers/Dockerfile
     depends_on:
       - db
     volumes:
