@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: create public key
         run: |
-          echo $PUBLIC_KEY_SSH > public-key.json
+          echo $PUBLIC_KEY_SSH > $GITHUB_WORKSPACE/public-key.json
             - name: ssh to server
       - name: ssh to server
         run: |
