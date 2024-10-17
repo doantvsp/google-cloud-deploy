@@ -1,0 +1,22 @@
+name: Test and deploy to Cloud Run
+
+on:
+  push:
+    branches: [ "deploy-ssh" ]
+env:
+  PUBLIC_KEY_SSH: ${{ secrets.PUBLIC_KEY_SSH }}
+jobs:
+  deploy-ssh:
+    steps:
+      - name: create public key
+        run: |
+          echo $PUBLIC_KEY_SSH > public-key.json
+            - name: ssh to server
+      - name: ssh to server
+        run: |
+          ssh -i public-key.json doantv@35.232.47.148
+          cd $GITHUB_REPOSITORY
+          ls
+
+
+
