@@ -10,17 +10,14 @@ jobs:
   deploy-ssh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up SSH
-        uses: actions/setup-ssh@v2
+      - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-public-key: ${{ secrets.SSH_PUBLIC_KEY }}
-      - name: SSH to Server
-        run: |
-          ssh -T doantv@35.232.47.148
-          cd $GITHUB_REPOSITORY
-          ls
+          ORIGIN: 35.232.47.148 # example.com || 8.8.8.8
+          SSHKEY: ${{ secrets.SSH_PUBLIC_KEY }} # ----- BEGIN RSA PRIVATE KEY----- ...
+          NAME: production
+          PORT: 80 # 3000
+          USER: doantv # admin
+      - run: ssh production ls --help
 
 
 
