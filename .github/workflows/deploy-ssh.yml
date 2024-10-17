@@ -13,7 +13,7 @@ jobs:
       - uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
         with:
           ORIGIN: 35.232.47.148 # example.com || 8.8.8.8
-          SSHKEY: ${{ secrets.SSH_PUBLIC_KEY }} # ----- BEGIN RSA PRIVATE KEY----- ...
+          SSHKEY: $SSH_PUBLIC_KEY # ----- BEGIN RSA PRIVATE KEY----- ...
           NAME: production
           PORT: 80 # 3000
           USER: doantv # admin
