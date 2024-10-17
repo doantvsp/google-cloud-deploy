@@ -7,6 +7,7 @@ env:
   PUBLIC_KEY_SSH: ${{ secrets.PUBLIC_KEY_SSH }}
 jobs:
   deploy-ssh:
+    runs-on: ubuntu-latest
     steps:
       - name: create public key
         run: |
